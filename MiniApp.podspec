@@ -1,6 +1,6 @@
 Pod::Spec.new do |miniapp|
   miniapp.name         = 'MiniApp'
-  miniapp.version      = '5.0.0'
+  miniapp.version      = '5.1.0'
   miniapp.authors      = "Rakuten Ecosystem Mobile"
   miniapp.summary      = "Rakuten's Mini App SDK"
   miniapp.description  = "This open-source library allows you to integrate Mini App ecosystem into your iOS applications. Mini App SDK also facilitates communication between a mini app and the host app via a message bridge."
@@ -12,16 +12,17 @@ Pod::Spec.new do |miniapp|
   miniapp.xcconfig = { "RMA_SDK_VERSION" => miniapp.version }
 
   miniapp.source   = {
-    :git => "https://github.com/rakutentech/ios-miniapp.git",
+    :git => "https://github.com/GondiTilak/ios-miniapp.git",
     :tag => 'v' + miniapp.version.to_s,
+    :branch => "upgrades/xcode14_iOS16",
     :submodules => true
   }
   miniapp.documentation_url = "https://rakutentech.github.io/ios-miniapp/"
   miniapp.platform = :ios
-  miniapp.ios.deployment_target = '14.0'
+  miniapp.ios.deployment_target = '16.1'
   miniapp.default_subspec = 'Core'
   miniapp.static_framework = true
-  miniapp.swift_versions = [5.0, 5.3, 5.4]
+  miniapp.swift_versions = [5.0, 5.3, 5.4, 5.7]
 
   miniapp.subspec 'Core' do |core|
     core.source_files = 'Sources/Classes/core/**/*.{swift,h,m}'
