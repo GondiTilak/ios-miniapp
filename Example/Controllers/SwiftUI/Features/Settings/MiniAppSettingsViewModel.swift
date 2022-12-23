@@ -77,6 +77,9 @@ class MiniAppSettingsViewModel: ObservableObject {
                     }
                 }
             }
+            if self.saveTokenDetails(accessToken: "ACCESS_TOKEN", date: Date()) {
+                print("AccessToken is now set to default value \"ACCESS_TOKEN\"")
+            }
         }
     }
 
@@ -150,7 +153,7 @@ class MiniAppSettingsViewModel: ObservableObject {
 
     func createRandomContact() -> MAContact {
         let fakeName = MiniAppStore.randomFakeName()
-        return MAContact(id: UUID().uuidString, name: fakeName, email: MiniAppStore.fakeMail(with: fakeName))
+        return MAContact(id: UUID().uuidString, name: fakeName, email: MiniAppStore.fakeMail(with: fakeName), allEmailList: MiniAppStore.fakeMailList(with: fakeName))
     }
 
     // MARK: - Access Token

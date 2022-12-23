@@ -61,6 +61,7 @@
 "demo.app.rat.page.name.profile"                        =   "Profile";
 "demo.app.rat.page.name.contactslist"                   =   "Contacts List";
 "demo.app.rat.page.name.contactsform"                   =   "Add Contact";
+"demo.app.rat.page.name.editcontactsform"               =   "Edit Contact";
 "demo.app.rat.page.name.permissions"                    =   "Permissions";
 "demo.app.rat.page.name.access_token"                   =   "Access Token";
 "demo.app.rat.page.name.deeplinks"                       =  "Deeplinks";
@@ -78,3 +79,5 @@
 "demo.app.rat.page.name.terms"                          =   "Terms";
 "demo.app.rat.page.name.list.i"                         =   "List I";
 "demo.app.rat.page.name.list.ii"                        =   "List II";
+"demo.app.rat.page.name.securestorage"                  =   "Secure Storage";
+"demo.app.rat.page.name.universalbridge"                =   "Universal Bridge";

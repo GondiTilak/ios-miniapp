@@ -1,6 +1,7 @@
 @testable import MiniApp
 import WebKit
 import Foundation
+@testable import MiniApp_Example
 
 // swiftlint:disable file_length
 
@@ -373,6 +374,10 @@ class MockFile {
 }
 
 class MockMessageInterfaceExtension: MiniAppMessageDelegate {
+    func sendJsonToHostApp(info: String, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
+        let mockMessageInterface = MockMessageInterface()
+        return mockMessageInterface.sendJsonToHostApp(info: info, completionHandler: completionHandler)
+    }
     func requestDevicePermission(permissionType: MiniAppDevicePermissionType, completionHandler: @escaping (Result<MASDKPermissionResponse, MASDKPermissionError>) -> Void) {
         let mockMessageInterface = MockMessageInterface()
         return mockMessageInterface.requestDevicePermission(permissionType: permissionType, completionHandler: completionHandler)
@@ -403,7 +408,14 @@ class MockMessageInterface: MiniAppMessageDelegate {
     var userSettingsAllowed: Bool = false
     var mockUserName: String? = ""
     var mockProfilePhoto: String? = ""
-    var mockContactList: [MAContact]? = [MAContact(id: "contact_id")]
+    var mockContactList: [MAContact]? = [
+        MAContact(
+            id: "contact_id",
+            name: MiniAppStore.randomFakeName(),
+            email: MiniAppStore.fakeMail(with: MiniAppStore.randomFakeName()),
+            allEmailList: MiniAppStore.fakeMailList(with: MiniAppStore.randomFakeName())
+        )
+    ]
     var messageContentAllowed: Bool = false
     var mockPointsInterface: Bool = false
     var mockAccessToken: String? = ""
@@ -500,7 +512,11 @@ class MockMessageInterface: MiniAppMessageDelegate {
     }
 
     func getContacts(completionHandler: @escaping (Result<[MAContact]?, MASDKError>) -> Void) {
-        completionHandler(.success(mockContactList))
+        if mockContactList != nil {
+            completionHandler(.success(mockContactList))
+        } else {
+            completionHandler(.failure(.unknownError(domain: MASDKLocale.localize(.hostAppError), code: 1, description: MASDKLocale.localize(.failedToConformToProtocol))))
+        }
     }
 
     func getAccessToken(miniAppId: String, scopes: MASDKAccessTokenScopes, completionHandler: @escaping (Result<MATokenInfo, MASDKAccessTokenError>) -> Void) {
@@ -528,6 +544,14 @@ class MockMessageInterface: MiniAppMessageDelegate {
             completionHandler(.success("sample.jpg"))
         } else {
             completionHandler(.failure(.downloadFailed(code: -1, reason: "download failed")))
+        }
+    }
+
+    func sendJsonToHostApp(info: String, completionHandler: @escaping (Result<MASDKProtocolResponse, UniversalBridgeError>) -> Void) {
+        if messageContentAllowed {
+            completionHandler(.success(.success))
+        } else {
+            completionHandler(.failure(.failedToConformToProtocol))
         }
     }
 }
